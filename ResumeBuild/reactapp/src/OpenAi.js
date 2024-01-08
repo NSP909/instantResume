@@ -1,22 +1,24 @@
-const { OpenAI } = require('openai');
+const openaiEndpoint = 'https://api.openai.com/v1/engines/gpt-3.5-turbo/completions';
 
-const openai = new OpenAI({
-    apiKey: '',
-    dangerouslyAllowBrowser: true,
-});
-
-
-async function sendMsgtoOpenAI(message){
-    const res = await openai.complete({
-        engine: 'text-davinci-003',
-        prompt: message,
-        temperature: 0.7,
-        max_tokens: 256,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0
+async function sendMsgtoOpenAI(message, apiKey) {
+    const response = await fetch(openaiEndpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+            messages: [{ role: 'user', content: message }],
+            model: 'gpt-3.5-turbo'
+        })
     });
-    return res.choices[0].text;
+
+    if (!response.ok) {
+        throw new Error('Network response was not ok.');
+    }
+
+    const data = await response.json();
+    return data.choices[0].text;
 }
 
 module.exports = { sendMsgtoOpenAI };

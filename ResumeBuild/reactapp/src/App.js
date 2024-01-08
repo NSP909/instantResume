@@ -31,6 +31,7 @@ function Main(){
 
 function FreeWrite() {
   const [input, setinput] = useState("");
+  const apiKey = '';
 
   const handleChange = (e) => {
     setinput(e.target.value);
@@ -38,29 +39,35 @@ function FreeWrite() {
 
   const handleSend = async () => {
     console.log("Input:", input); // Check if input is captured correctly
-
-    const res = await sendMsgtoOpenAI(input);
-    console.log("Response from AI:", res); // Check the response from the API
+    sendMsgtoOpenAI(input, apiKey)
+    .then(response => {
+        console.log('Response from AI:', response);
+        // Handle the response here
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors here
+    });
   };
 
   return (
     <div className='flex flex-col gap-10 w-[80%] sticky top-0 justify-center p-10'>
       <p className='text-center text-xl'>Enter Your Information Below:</p>
-      <form className='flex flex-col'>
-        <textarea
+    
+        <input type="text"
           className='m-auto rounded-md w-[80%] h-[40vh] indent-5 text-2xl pt-5 text-headerColor font-serif'
           id="freeWrite"
           placeholder="Write here..."
           value={input}
           onChange={handleChange}
-        ></textarea>
+        />
         <button
           className='mt-10 rounded-xl w-[150px] h-[60px] m-auto text-xl bg-secondary text-textColor font-semibold hover:bg-[#1abc9c]'
           onClick={handleSend}
         >
           Generate
         </button>
-      </form>
+     
     </div>
   );
 }
