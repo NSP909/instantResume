@@ -31,7 +31,7 @@ function Main(){
 
 function FreeWrite() {
   const [input, setinput] = useState("");
-  const apiKey = '';
+  const apiKey = "";
 
   const handleChange = (e) => {
     setinput(e.target.value);
