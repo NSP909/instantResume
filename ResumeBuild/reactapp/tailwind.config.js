@@ -7,8 +7,8 @@ module.exports = {
     extend: {
       colors:{
         textColor: '#EBEBEA',
-        headerColor: "#010814",
-        primary: "#021027",
+        headerColor: "#021027",
+        primary: "#02183C",
         secondary: "#CC5F00"
       }
     },
