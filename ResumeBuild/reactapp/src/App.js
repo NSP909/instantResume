@@ -14,7 +14,7 @@ function App() {
 
 function Header() {
   return (
-    <header className="p-7 bg-headerColor border-b-gray-500 border-b-[1px]">
+    <header className="p-7 bg-headerColor border-b-gray-500 border-b-[1px] sticky top-0">
       <h1 className='text-center text-4xl tracking-wider font-["Nunito Sans"] text-textColor'>
         <p className="inline text-secondary">ASAP</p>Resume
       </h1>
@@ -24,7 +24,7 @@ function Header() {
 
 function Main() {
   return (
-    <div className="grid grid-cols-[20%_,35%_,45%] bg-headerColor w-[100vw] h-[100dvh]">
+    <div className="grid grid-cols-[20%_,35%_,45%] bg-headerColor w-[100vw] h-[100vh]">
       <Template />
       <PdfView />
       <FreeWrite />
