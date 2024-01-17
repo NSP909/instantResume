@@ -1,4 +1,8 @@
+import template from "./Template";
+
+
 const openaiEndpoint = 'https://api.openai.com/v1/chat/completions';
+
 
 async function sendMsgtoOpenAI(message, apiKey) {
    
@@ -10,7 +14,7 @@ async function sendMsgtoOpenAI(message, apiKey) {
             },
             body: JSON.stringify({
                 model: 'gpt-3.5-turbo',
-                messages: [{ role: 'user', content: message }],
+                messages: [{role:'system', content:`you are an resume making bot you will make a resume according to the given input and using this template ${template}`},{ role: 'user', content: message }],
                 max_tokens: 100,
                 
                
@@ -23,4 +27,4 @@ async function sendMsgtoOpenAI(message, apiKey) {
 }
 
 
-module.exports = { sendMsgtoOpenAI };
+export { sendMsgtoOpenAI };

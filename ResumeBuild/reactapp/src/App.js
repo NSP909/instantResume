@@ -2,6 +2,8 @@ import "./App.css";
 import { useState } from "react";
 import { sendMsgtoOpenAI } from "./OpenAi";
 import OPENAI_API_KEY from "./apiKey";
+import template from "./Template";
+
 
 function App() {
   return (
