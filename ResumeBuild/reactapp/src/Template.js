@@ -69,7 +69,8 @@ let template = String.raw`\
 
 %-------------------------------------------%
 \end{document}
-`
+`;
+
 export default template;
 
 
