@@ -3,6 +3,7 @@ import { useState } from "react";
 import { sendMsgtoOpenAI } from "./OpenAi";
 import OPENAI_API_KEY from "./apiKey";
 import template from "./Template";
+import selectTemplate, {selectedTemplate} from "./templateSelector";
 
 
 function App() {
@@ -31,7 +32,7 @@ function Main() {
     <div className="grid grid-cols-[20%_,35%_,45%] bg-headerColor w-[100vw] h-[100vh]">
       <Templates setSelectedTemplate={setSelectedTemplate} />
       <PdfView selectedTemplate={selectedTemplate} />
-      <FreeWrite />
+      <FreeWrite selectedTemplate={selectedTemplate}/>
     </div>
   );
 }
@@ -91,9 +92,10 @@ function PdfView({ selectedTemplate }) {
 
 
 
-function FreeWrite() {
+function FreeWrite({selectedTemplate}) {
   const [input, setinput] = useState("");
   const apiKey = OPENAI_API_KEY;
+  const stemplate = selectTemplate(selectedTemplate);
 
   const handleChange = (e) => {
     setinput(e.target.value);
@@ -101,7 +103,7 @@ function FreeWrite() {
 
   const handleSend = async () => {
     console.log("Input:", input); 
-    sendMsgtoOpenAI(input, apiKey)
+    sendMsgtoOpenAI(input, apiKey, stemplate)
       .then((response) => {
         console.log("Response from AI:", response);
       })
