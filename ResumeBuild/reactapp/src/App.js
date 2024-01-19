@@ -1,15 +1,16 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { sendMsgtoOpenAI } from "./OpenAi";
 import OPENAI_API_KEY from "./apiKey";
 import template from "./Template";
-
+import latex_content from "./SampleLatex";
 
 function App() {
   return (
     <div className="App">
       <Header />
       <Main />
+      <Convert/>
     </div>
   );
 }
@@ -110,6 +111,48 @@ function FreeWrite() {
       </button>
     </div>
   );
+}
+
+function Convert(props){
+  const [pdfLink, setPdfLink] = useState('a')
+
+  const url = 'http://127.0.0.1:5000/convert'
+  const handleReceive = async ()=> {
+    let response = await fetch(url, {
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({latex:latex_content})
+    })
+    const blob = await response.blob()
+    const output = window.URL.createObjectURL(blob)
+    setPdfLink(()=>output)
+  }
+
+  const returnLink = ()=>{
+    if(pdfLink!=='a'){
+      return (
+        <button
+        className="mt-10 rounded-xl w-[80px] text-sm h-[50px] md:w-[150px] md:h-[60px] md:text-xl bg-[#1abc9c] text-textColor font-semibold">
+          <a target = "_blank" href ={pdfLink} className="text-textColor">Pdf here</a>
+        </button>
+      )
+    }
+  }
+
+  return(
+    <div className="flex justify-center gap-10">
+      <button
+        className="mt-10 rounded-xl w-[80px] text-sm h-[50px] md:w-[150px] md:h-[60px] md:text-xl bg-[#1abc9c] text-textColor font-semibold"
+        onClick={handleReceive}
+      >
+        Test
+      </button>      
+      {returnLink()}
+
+    </div>
+  )
 }
 
 export default App;
