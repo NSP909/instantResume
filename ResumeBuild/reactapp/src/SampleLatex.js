@@ -1,215 +1,146 @@
-let latex_content = String.raw`\documentclass[a4paper,11pt]{article}
+let latex_content = String.raw`\documentclass[11pt]{article}
 
-\usepackage{latexsym}
-\usepackage[empty]{fullpage}
-\usepackage{titlesec}
-\usepackage{marvosym}
-\usepackage[usenames,dvipsnames]{color}
-\usepackage{verbatim}
-\usepackage{enumitem}
-\usepackage[hidelinks]{hyperref}
-\usepackage{fancyhdr}
-\usepackage[english]{babel}
-\usepackage{tabularx}
-\usepackage{multicol}
-\input{glyphtounicode}
-
-\usepackage[sfdefault]{inter} 
 \usepackage[T1]{fontenc}
+\usepackage{inter} % https://tug.org/FontCatalogue/
+\renewcommand*\familydefault{\sfdefault}
+
+\usepackage{geometry}
+\geometry{
+a4paper,
+top=1.8cm,
+bottom=1in,
+left=2.5cm,
+right=2.5cm
+}
+
+\setcounter{secnumdepth}{0} % remove section numbering
+\pdfgentounicode=1 % make ATS friendly
+
+\usepackage{enumitem}
+\setlist[itemize]{
+    noitemsep,
+    left=0pt..1.5em
+}
+\setlist[description]{itemsep=0pt}
+\setlist[enumerate]{align=left}
+
+\usepackage[dvipsnames]{xcolor}
+% \usepackage[dvipsnames, svgnames, x11names]{xcolor} 
+% \usepackage[dvipsnames]{xcolor} % xcolor.pdf Sec.4 Colors by Name
+\colorlet{icnclr}{gray}
+% \colorlet [⟨type⟩]{⟨name⟩}[⟨num model⟩]{⟨color ⟩}
+% \definecolor[⟨type⟩]{⟨name⟩}{⟨model-list⟩}{⟨spec-list⟩}
 
 
+\usepackage{titlesec}
+% \titlespacing{command}{left spacing}{before spacing}{after spacing}[right]
+% \titlespacing{\section}{0pt}{*3}{*1}
+\titlespacing{\subsection}{0pt}{*0}{*0}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+% \titleformat{<command>}[<shape>]{<format>}{<label>}{<sec>}{<before-code>}[<after-code>]  
+\titleformat{\section}{\color{Sepia}\large\fontseries{black}\selectfont\uppercase}{}{}{\ruleafter}[\global\RemVStrue]
+\titleformat{\subsection}{\large\fontseries{semibold}\selectfont}{}{}{\rvs}
+\titleformat{\subsubsection}{\large\fontseries{medium}\selectfont}{}{}{}
+
+\usepackage{xhfill} 
+\newcommand\ruleafter[1]{#1~\xrfill[.5ex]{1pt}[gray]} % add rule after title in .5 x-height 
+
+\newif\ifRemVS % remove vspace between \section & \subsection
+\newcommand{\rvs}{
+    \ifRemVS
+        \vspace{-1.5ex}
+    \fi
+    \global\RemVSfalse
+}
+
+
+\usepackage{fontawesome5}
+
+\usepackage[bookmarks=false]{hyperref} % [imp!]
+\hypersetup{ % https://en.wikibooks.org/wiki/LaTeX/Hyperlinks
+    colorlinks=true,
+    urlcolor=Sepia,
+    pdftitle={My Resume},
+}
+
+\usepackage[page]{totalcount}
+\usepackage{fancyhdr}
 \pagestyle{fancy}
-\fancyhf{} 
-\fancyfoot{}
-\setlength{\footskip}{10pt}
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\headrulewidth}{0pt}	
+\fancyhf{}							
+\cfoot{\color{darkgray} Rover R\'esum\'e -- Page \thepage{} of \totalpages}
 
-\addtolength{\oddsidemargin}{0.0in}
-\addtolength{\evensidemargin}{0.0in}
-\addtolength{\textwidth}{0.0in}
-\addtolength{\topmargin}{0.2in}
-\addtolength{\textheight}{0.0in}
-
-
-\urlstyle{same}
-
-%\raggedbottom
-\raggedright
-\setlength{\tabcolsep}{0in}
-
-\titleformat{\section}{
-  \it\vspace{3pt}
-}{}{0em}{}[\color{black}\titlerule\vspace{-5pt}]
-
-\pdfgentounicode=1
-
-\newcommand{\resumeItem}[1]{
-  \item{
-    {#1 \vspace{-4pt}}
-  }
-}
-
-\newcommand{\resumeSubheading}[4]{
-  \vspace{-2pt}\item
-    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
-      \textbf{#1} & #2 \\
-      \textit{\small #3} & \textit{\small #4} \\
-    \end{tabular*}\vspace{-10pt}
-}
-
-
-\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-3pt}}
-\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
-\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
-\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
-\newcommand{\resumeItemListStart}{\begin{itemize}}
-\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-2pt}}
 
 \begin{document}
 
-
+%== HEADER ==%
 \begin{center}
-    {\huge Your Name} \\ \vspace{0pt}
-    \begin{multicols}{2}
-    \begin{flushleft}
-    \large{Street Building Stair HouseNumber etc} \\
-%  optional line below if you need more address info
-    \large{Additional address information} \\
-    \large{PostalCode City Country} \\
-    \end{flushleft}
-    
-    \begin{flushright}
-% below could be LinkedIn, GitHub, or a personal website or social media account (if used for professional purposes)
-    \href{{url for website you want to link}} \large{text that will be linked to a url} \\
-% please ensure your email address is one you check
-    \href{mailto:{your email adress}} \large{your email address}
-    \end{flushright}
-    \end{multicols}
+    {\fontsize{36}{36}\selectfont\interthin Swastik\interheavy Agrawal} \\ \bigskip
+    {\color{icnclr}\faEnvelope[regular]} \href{mailto:sw@example.com}{sw@example.com} $|$
+    {\color{icnclr}\faLinkedinIn} \href{https://www.linkedin.com/}{linkedin.com/in/swastik\_agrawal}
 \end{center}
 
-
-%-----------EDUCATION-----------
-% Please list your current institution first and then past schools in reverse chronology. No need for grades, etc. You do not need to include high school but may do so if there are accomplishments you would like to highlight.
 \section{Education}
-\resumeSubHeadingListStart
+%==============
+\subsection{University of Location $|$ {\normalfont\textit{Master of PG Degree}} \hfill 2024}
+\begin{itemize}
+    \item Cumulative GPA: 3.98
+    \item Related Coursework: Intro to Programming with Python, Database Administration
+    \item Rover Resume Award
+\end{itemize}
 
-    \resumeSubheading
-% list month-year for the start date followed by month-year for the end date (or "Present" if in progress)
-{University Name}{Month Year -- Month Year}
-        {degree and major/field of study you are pursuing}{City Country}
-    \resumeSubheading
-        {Other University Name}{Month Year -- Month Year}
-        {degree and major or coursework you pursued}{City Country}
+\subsection{Graduation College \hfill City, State}
+\subsubsection{Degree Name (B.S.) \hfill Year}
+\begin{itemize}
+    \item GPA: 3.4 (Mention if good)
+    \item Related Coursework (list of relavent classes to the job)
+    \item Dean's Award (list any awards or achivements)
+\end{itemize}
 
-\resumeSubHeadingListEnd
+\section{Experience}
+%===================
+\subsection{Amazon \hfill Feb 2008 -- Present}
+\subsubsection{Prime Member \hfill City, State}
+\begin{itemize}
+    \item Increased order volume by 823\% over 7 years 
+    \item Researched diverse product catalog, spanning departments from Simplehuman bag liners to cat food. 
+    \item Regularly reported on product quality using review portal.
+\end{itemize}
 
+\subsection{Organization \hfill City, State}
+\subsubsection{Position Title \hfill Month Year - Month Year}
+\begin{itemize}
+    \item XYZ method - Accomplished [X] as measured by [Y], by doing [Z].
+    \item CAR method - Context, Action, Result. STAR method - Situation, Task, Action, Result.
+    \item Begin each line with an action verb and include details that will help the reader understand your accomplishments, skills, knowledge, abilities, or achievements.
+    \item Quantify where possible.
+\end{itemize}
 
-%-----------RESEARCH EXPERIENCE-----------
-\section{Research Experience}
-% this section can include experience gained in coursework, or group or independent research projects
-% delete or add Subheading sections as needed
-\resumeSubHeadingListStart
+\section{Skills}
+%===============
+\begin{description}
+    \item[Technical] List computer software and programming languages
+    \item[Language] List foreign languages and your level of fluency
+    \item[Laboratory] List scientific / research lab techniques or tools [If Applicable]
+    \item[Interests] List activities you enjoy that may spark interview conversation
+\end{description}
 
-\resumeSubheading
-% list month-year for the start date followed by month-year for the end date (or "Present" if ongoing)
-        {Research experience title}{Month Year -- Month Year}
-        {University, Company or Organization}{City, Country}
-      \resumeItemListStart
-        \small\resumeItem{very short description of one thing you did}
-        \resumeItem{very short description of another thing you did}
-        \resumeItem{very short description if there was another thing you did}
-    \resumeItemListEnd
-\resumeSubheading   
-        {Research experience title}{Month Year -- Month Year}
-        {University, Company or Organization}{City, Country}
-      \resumeItemListStart
-        \small\resumeItem{very short description of one thing you did}
-        \resumeItem{very short description of another thing you did}
-        \resumeItem{very short description if there was another thing you did}
-    \resumeItemListEnd
+\section{Projects}
+%=================
+\subsection{Project Name {\normalfont $|$ \href{http://github.com}{\textit{GitHub Link}}} \hfill 2022}
+\begin{itemize}
+    \item Tech used, Language, Frameworks etc.
+    \item Implemented ABC feature
+    \item Optimised XYZ by 50\%
+\end{itemize}
 
-\resumeSubHeadingListEnd
-
-
-% OPTIONAL SECTION : DELETE FROM HERE UNTIL % % % % TO REMOVE
-%-----------PROFESSIONAL EXPERIENCE-----------
-\section{Professional Experience}
-% if you have been employed, do volunteer activities, or have held other formal or informal jobs, you can list them here.   
-\resumeSubHeadingListStart
-
-    \resumeSubheading
-% list month-year for the start date followed by month-year for the end date (or "Present" if ongoing)
-        {Position title}{Month Year  -- Month Year}
-        {University, Company or Organization}{City Country}
-      \resumeItemListStart
-        \small\resumeItem{very short description of one thing you did}
-        \resumeItem{very short description of another thing you did}
-        \resumeItem{very short description if there was another thing you did}
-        \resumeItemListEnd
-
-    \resumeSubheading
-      {Another job title}{Month Year -- Month Year}
-      {University, Company or Organization}{City Country}
-      \resumeItemListStart
-        \small\resumeItem{very short description of one thing you did}
-        \resumeItem{very short description of another thing you did}
-        \resumeItem{very short description if there was another thing you did}
-        \resumeItemListEnd
-
-\resumeSubHeadingListEnd
-% % % % END OPTIONAL SECTION PROFESSIONAL EXPERIENCE % % % %
-
-% OPTIONAL SECTION : DELETE FROM HERE UNTIL % % % % TO REMOVE
-%-----------RESEARCH PRESENTATIONS-----------
-\section{Research Presentations} 
-% It is not expected that applicants will have items for this section, but if you have presented or published research findings, you are welcome to include them here
-\begin{itemize}[leftmargin=0.15in, label={}]
-    \normalsize{\item{
-    {citation in your preferred format -- include all authors who contributed}{} \\
-    {citation in your preferred format -- include all authors who contributed}{} 
-}}
- \end{itemize}
-% % % % END OPTIONAL SECTION RESEARCH PRESENTATIONS % % % %
-
-% OPTIONAL SECTION : DELETE FROM HERE UNTIL % % % % TO REMOVE 
-%-----------AWARDS & HONORS-----------
-\section{Awards \& Honors} 
-% This section can include academic achievements and honors as well as recognition in your community. Remove or add sections as needed.
-\resumeSubHeadingListStart
-    \resumeSubheading
-    {Title or brief description of the award}{}
-    {University, Sponsor or Organization}{year(s)}
-    \resumeSubheading
-    {Title or brief description of the award}{}
-    {University, Sponsor or Organization}{year(s)}
-\resumeSubHeadingListEnd
-% % % % END OPTIONAL SECTION AWARDS & HONORS % % % %
-
-% OPTIONAL SECTION : DELETE FROM HERE UNTIL % % % % TO REMOVE 
-%-----------SKILLS-----------
-\section{Specialized Skills}
-% This section can include programming or spoken languages, text editing and general software knowledge, certifications, version control or project management tools, or other skills that might be relevant. You can include as many or as few as you like: delete or add as needed.  
-\begin{itemize}[leftmargin=0.15in, label={}]
-    \normalsize{\item{
-     \textbf{Heading, eg. "Programming Languages"}{: Python (beginner), R (intermediate)} \\
-     \textbf{Other topics}{: your skills}\\
-     \textbf{Other topics}{: your skills} \\
-    }}
- \end{itemize}
-% % % % END OPTIONAL SECTION SKILLS % % % %
-
-% OPTIONAL SECTION : DELETE FROM HERE UNTIL % % % % TO REMOVE 
-%-----------OTHER INTERESTS-----------
-\section{Other Interests}
-% Also an optional section, for any hobbies, sports, artistic and musical pursuits, etc. that you would like to include. You can include as many or as few as you like: delete or add as needed. 
-\begin{itemize}[leftmargin=0.15in, label={}]
-    \normalsize{\item{
-     \textbf{Heading, eg. "Athletics"}{: {tennis (club team captain)} } \\
-      \textbf{Other heading}{: {the thing you want to include} } \\
-    }}    
- \end{itemize}
-% % % % END OPTIONAL SECTION OTHER INTERESTS % % % %
+\section{Certification \& Awards}
+%===============================
+\begin{enumerate}[itemsep=0pt]
+  \item [2023] Some programming bootcamp, Location.
+  \item [2022] Forbes Top 15 Procrastinators under 15.
+  \item [2021] Conducted workshop on family planning by abstainance in SomePlace.
+\end{enumerate}
 
 \end{document}`
 
