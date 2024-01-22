@@ -1,4 +1,4 @@
-let template = String.raw`\
+let template4 = String.raw`\
 \documentclass[letterpaper,11pt]{article}
 \usepackage{fontawesome5}
 \usepackage{latexsym}
@@ -70,7 +70,4 @@ let template = String.raw`\
 %-------------------------------------------%
 \end{document}
 `;
-
-export default template;
-
-
+export default template4;

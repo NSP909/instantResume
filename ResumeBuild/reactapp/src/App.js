@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { sendMsgtoOpenAI } from "./OpenAi";
 import OPENAI_API_KEY from "./apiKey";
 import template from "./Template";
-import latex_content from "./SampleLatex";
+import selectTemplate, {selectedTemplate} from "./templateSelector";
+
 
 function App() {
   return (
@@ -26,68 +27,89 @@ function Header() {
 }
 
 function Main() {
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
+
   return (
     <div className="grid grid-cols-[20%_,35%_,45%] bg-headerColor w-[100vw] h-[100vh]">
-      <Template />
-      <PdfView />
-      <FreeWrite />
+      <Templates setSelectedTemplate={setSelectedTemplate} />
+      <PdfView selectedTemplate={selectedTemplate} />
+      <FreeWrite selectedTemplate={selectedTemplate}/>
     </div>
   );
 }
 
-function Template() {
+
+
+function Templates(props) {
+  const { setSelectedTemplate } = props;
+
+  const templateImages = [
+    "./images/33601.jpeg",
+    "./images/33428.jpeg",
+    "./images/33137.jpeg",
+    "./images/31023.jpeg",
+    "./images/33536.jpeg",
+    // Add more template images as needed
+  ];
+
+  const handleTemplateClick = (index) => {
+    setSelectedTemplate(index);
+  };
+
   return (
     <div className="flex flex-col items-center pt-10 gap-10 max-w-[100%] overflow-scroll scrollable-element will-change-scroll bg-[#1A2433] border-r-gray-500 border-r-[1px] sm:px-2">
-      <img
-        src="./images/1131w-f5JNR-K5jjw.webp"
-        className="h-[250px] w-auto hover:border-secondary hover:border-4"
-      />
-      <img
-        src="./images/1131w-f5JNR-K5jjw.webp"
-        className="h-[250px] hover:border-secondary hover:border-4"
-      />
-      <img
-        src="./images/1131w-f5JNR-K5jjw.webp"
-        className="h-[250px] hover:border-secondary hover:border-4"
-      />
-      <img
-        src="./images/1131w-f5JNR-K5jjw.webp"
-        className="h-[250px] hover:border-secondary hover:border-4"
-      />
-      <img
-        src="./images/1131w-f5JNR-K5jjw.webp"
-        className="h-[250px] hover:border-secondary hover:border-4"
-      />
+      {templateImages.map((template, index) => (
+        <img
+          key={index}
+          src={template}
+          className={`h-[250px] hover:border-secondary hover:border-4 ${props.selectedTemplate === index ? 'border-secondary border-4' : ''}`}
+          onClick={() => handleTemplateClick(index)}
+        />
+      ))}
     </div>
   );
 }
 
-function PdfView() {
+
+
+function PdfView({ selectedTemplate }) {
+  const templateImages = [
+    "./images/33601.jpeg",
+    "./images/33428.jpeg",
+    "./images/33137.jpeg",
+    "./images/31023.jpeg",
+    "./images/33536.jpeg",
+    // Add more template images as needed
+  ];
+
   return (
     <div className="flex items-center justify-center border-r-gray-500 border-r-[1px]">
-      <img src="./images/1131w-f5JNR-K5jjw.webp" className="max-h-[70vh] p-4" />
+      {selectedTemplate !== null && (
+        <img src={templateImages[selectedTemplate]} className="max-h-[70vh] p-4" />
+      )}
     </div>
   );
 }
 
-function FreeWrite() {
+
+
+function FreeWrite({selectedTemplate}) {
   const [input, setinput] = useState("");
   const apiKey = OPENAI_API_KEY;
+  const stemplate = selectTemplate(selectedTemplate);
 
   const handleChange = (e) => {
     setinput(e.target.value);
   };
 
   const handleSend = async () => {
-    console.log("Input:", input); // Check if input is captured correctly
-    sendMsgtoOpenAI(input, apiKey)
+    console.log("Input:", input); 
+    sendMsgtoOpenAI(input, apiKey, stemplate)
       .then((response) => {
         console.log("Response from AI:", response);
-        // Handle the response here
       })
       .catch((error) => {
         console.error("Error", error);
-        // Handle errors here
       });
   };
 
