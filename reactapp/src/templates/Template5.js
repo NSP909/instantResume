@@ -251,6 +251,9 @@ let template5 = String.raw`
             \end{itemize}
         % ----- PROJECTS -----
     \end{paracol}
-\end{document}`;
+\end{document}
+`;
 
 export default template5;
+
+//doesn't seem to work with gpt call.. Bad Request 400

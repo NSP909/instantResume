@@ -156,9 +156,9 @@ function Convert(props){
     setPdfLink(()=>output)
   }
 
-  const testFunc = () => {
-    console.log(props.latex_content)
-  }
+  // const testFunc = () => {
+  //   console.log(props.latex_content)
+  // }
 
   const returnLink = ()=>{
     if(pdfLink!=='a'){

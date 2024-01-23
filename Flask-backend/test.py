@@ -1,4 +1,6 @@
-let template4 = String.raw`\
+import requests
+
+latex = r'''
 \documentclass[letterpaper,11pt]{article}
 \usepackage{fontawesome5}
 \usepackage{latexsym}
@@ -47,27 +49,38 @@ let template4 = String.raw`\
 %-------------------------%
 % Custom commands
 \begin{document}
-\include{custom-commands}
 
-%-------------------------------------------%
 %%%%%%  RESUME STARTS HERE  %%%%%
 
 %----------HEADING----------%
 \input{src/heading}
 
-%-----------EDUCATION-----------%
-\input{src/education.tex}
+{\large \textbf{Education}} \\
+\textbf{University of Maryland} \hfill \textbf{2027} \\
+GPA: 4.0
 
-%-----------EXPERIENCE-----------%
-\input{src/experience}
+{\large \textbf{Work Experience}} \\
+\textbf{Amazon} \hfill \textit{AI Developer} \\
+Developed an alternative to Alexa AI using deep learning and voice recognition technologies.
 
-%-----------PROJECTS-----------%
-\input{src/projects}
+\textbf{CloudFare} \hfill \textit{Technical Consultant} \\
+Installed required technologies to update VM instances as they run concurrently.
 
-%-----------SKILLS-----------%
-\input{src/skills.tex}
+{\large \textbf{Awards}} \\
+\textbf{Big Tech Award}
+
+{\large \textbf{Skills}} \\
+Python, JavaScript, React, Java, R, MATLAB
 
 %-------------------------------------------%
 \end{document}
-`;
-export default template4;
+'''
+
+BASE = 'http://127.0.0.1:5000'
+
+print(requests.post(BASE+'/convert',json={'latex':latex}))
+
+
+
+
+
