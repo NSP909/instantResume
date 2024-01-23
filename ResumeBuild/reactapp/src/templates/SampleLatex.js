@@ -1,4 +1,4 @@
-let latex_content = String.raw`\documentclass[11pt]{article}
+let sample_latex = String.raw`\documentclass[11pt]{article}
 
 \usepackage[T1]{fontenc}
 \usepackage{inter} % https://tug.org/FontCatalogue/
@@ -144,4 +144,4 @@ right=2.5cm
 
 \end{document}`
 
-export default latex_content;
+export default sample_latex;

@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, jsonify, make_response
 from flask_restful import Api, Resource
 import subprocess
 import tempfile
@@ -23,10 +23,23 @@ class Convert(Resource):
             
             pdf_path = temp_dir+'/created.pdf'
             print('output',output)
-            return send_file(path_or_file=pdf_path,mimetype='application/pdf', as_attachment=False)
-        
+            response = make_response(send_file(path_or_file=pdf_path,mimetype='application/pdf', as_attachment=False))
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+            return response
+
+
+# class TestCors(Resource):
+#     def post(self):
+#         latex_content = {'received_latex': request.json['latex']}
+#         return jsonify(latex_content)
+
+
     def get(self):
         return 'The app is working'
+    
+
 
 api.add_resource(Convert,'/convert')
 

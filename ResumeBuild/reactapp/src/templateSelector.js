@@ -1,8 +1,8 @@
-import template from "./Template";
-import template2 from "./Template2";
-import template3 from "./Template3";
-import template4 from "./Template4";
-import template5 from "./Template5";
+import template from "./templates/Template";
+import template2 from "./templates/Template2";
+import template3 from "./templates/Template3";
+import template4 from "./templates/Template4";
+import template5 from "./templates/Template5";
 
 function selectTemplate(selectedTemplate) {
   switch (selectedTemplate) {

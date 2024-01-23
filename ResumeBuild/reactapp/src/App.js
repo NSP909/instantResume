@@ -2,8 +2,9 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import { sendMsgtoOpenAI } from "./OpenAi";
 import OPENAI_API_KEY from "./apiKey";
-import template from "./Template";
+import template from "./templates/Template";
 import selectTemplate, {selectedTemplate} from "./templateSelector";
+import sample_latex from "./templates/SampleLatex";
 
 
 function App() {
@@ -11,7 +12,6 @@ function App() {
     <div className="App">
       <Header />
       <Main />
-      <Convert/>
     </div>
   );
 }
@@ -95,9 +95,9 @@ function PdfView({ selectedTemplate }) {
 
 function FreeWrite({selectedTemplate}) {
   const [input, setinput] = useState("");
+  const [latex, setLatex] = useState("");
   const apiKey = OPENAI_API_KEY;
   const stemplate = selectTemplate(selectedTemplate);
-
   const handleChange = (e) => {
     setinput(e.target.value);
   };
@@ -106,6 +106,7 @@ function FreeWrite({selectedTemplate}) {
     console.log("Input:", input); 
     sendMsgtoOpenAI(input, apiKey, stemplate)
       .then((response) => {
+        setLatex(()=>response)
         console.log("Response from AI:", response);
       })
       .catch((error) => {
@@ -131,6 +132,7 @@ function FreeWrite({selectedTemplate}) {
       >
         Generate
       </button>
+      <Convert latex_content= {latex}/>
     </div>
   );
 }
@@ -145,11 +147,17 @@ function Convert(props){
       headers:{
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({latex:latex_content})
+      body: JSON.stringify({latex:String.raw`${props.latex_content}`})//
     })
-    const blob = await response.blob()
+    // let latex = await response.json()
+    // console.log(latex.received_latex)
+    const blob = await response.blob() //change response to latex later on maybe
     const output = window.URL.createObjectURL(blob)
     setPdfLink(()=>output)
+  }
+
+  const testFunc = () => {
+    console.log(props.latex_content)
   }
 
   const returnLink = ()=>{
