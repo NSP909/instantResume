@@ -30,7 +30,7 @@ function Main() {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
 
   return (
-    <div className="grid grid-cols-[20%_,35%_,45%] bg-headerColor w-[100vw] h-[100vh]">
+    <div className="grid grid-cols-[20%_,35%_,45%] bg-headerColor h-[100vh]">
       <Templates setSelectedTemplate={setSelectedTemplate} />
       <PdfView selectedTemplate={selectedTemplate} />
       <FreeWrite selectedTemplate={selectedTemplate}/>
@@ -184,5 +184,6 @@ function Convert(props){
     </div>
   )
 }
+
 
 export default App;
