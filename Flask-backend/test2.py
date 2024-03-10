@@ -1,10 +1,13 @@
-
-
-let template2 = String.raw`\documentclass[11pt]{article}
+import requests
+latex = r'''
+\documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{inter} % https://tug.org/FontCatalogue/
 \renewcommand*\familydefault{\sfdefault}
+\usepackage{xstring} % for string manipulation
+\newcommand{\replacelt}[1]{\StrSubstitute{#1}{⟨}{\langle}}
+\newunicodechar{⟨}{\ltbracket}
 
 \usepackage{geometry}
 \geometry{
@@ -145,6 +148,10 @@ right=2.5cm
   \item [2021] Conducted workshop on family planning by abstainance in SomePlace.
 \end{enumerate}
 
-\end{document}`;
+\end{document}
+'''
+BASE = 'http://127.0.0.1:5000'
 
-export default template2;
+print(requests.post(BASE+'/convert',json={'latex':latex}))
+
+

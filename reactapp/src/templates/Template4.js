@@ -53,7 +53,14 @@ let template4 = String.raw`\
 %%%%%%  RESUME STARTS HERE  %%%%%
 
 %----------HEADING----------%
-\input{src/heading}
+\begin{center}
+  {\Huge Your Name} \\
+  \vspace{2pt}
+  \faEnvelope\ your.email@example.com \quad
+  \faPhone\ (123) 456-7890 \quad
+  \faLinkedin\ linkedin.com/in/your-profile \quad
+  \faGithub\ github.com/your-username
+\end{center}
 
 %-----------EDUCATION-----------%
 \input{src/education.tex}
